@@ -12,12 +12,22 @@ namespace Task8_Serialization
     {
         static void Main(string[] args)
         {
-            Serializer serializer = new Serializer();
-            Catalog catalog = serializer.DeserializeFromXml(XmlFilesInfo.SourceFile);
-            Console.WriteLine($"Information from file {XmlFilesInfo.SourceFile} has been deserialized to Catalog object\n");
-            serializer.SerializeToXml(catalog, XmlFilesInfo.ResultFile);
-            Console.WriteLine($"Catalog object has been serialized to file {XmlFilesInfo.ResultFile}\n");
-
+            try
+            {
+                Serializer serializer = new Serializer();
+                Catalog catalog = serializer.DeserializeFromXml(XmlFilesInfo.SourceFile);
+                Console.WriteLine($"Information from file {XmlFilesInfo.SourceFile} has been deserialized to Catalog object\n");
+                serializer.SerializeToXml(catalog, XmlFilesInfo.ResultFile);
+                Console.WriteLine($"Catalog object has been serialized to file {XmlFilesInfo.ResultFile}\n");
+            }
+            catch(FileNotFoundException ex)
+            {
+                Console.WriteLine($"{ex.Message} You should change xml file path in the resources file.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"{ex.Message}");
+            }
             Console.WriteLine("Press any key to exit...");
             Console.ReadLine();
         }
