@@ -10,10 +10,17 @@ namespace Task8_Serialization
 {
     class Serializer
     {
+        XmlSerializer serializer;
+        XmlSerializerNamespaces namespaces;
+
+        public Serializer()
+        {
+            serializer = new XmlSerializer(typeof(Catalog));
+            namespaces = new XmlSerializerNamespaces();
+        }
+
         public void SerializeToXml(Catalog details, string filePath)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(Catalog));
-            XmlSerializerNamespaces namespaces = new XmlSerializerNamespaces();
             namespaces.Add("", XmlFilesInfo.Namespace);
             using (TextWriter writer = new StreamWriter(filePath))
             {
@@ -23,7 +30,6 @@ namespace Task8_Serialization
 
         public Catalog DeserializeFromXml(string filePath)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(Catalog));
             using (TextReader reader = new StreamReader(filePath))
             {
                 return (Catalog)serializer.Deserialize(reader);
